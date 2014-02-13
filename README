@@ -1,0 +1,17 @@
+This is a simple to use 4 polyphonic wavetable synthesizer library for Arduino.
+
+Specs:
+
+20KHz sample rate using approx 45 % of the available CPU time.
+Output audio as PWM on pin 11, pin 3 or ad differential signal on both.
+Has 5 build in waveforms SINE, RAMP, SAW, SQUARE and NOISE.
+Has 4 build in envelopes.
+Each of the 4 voices has parameters for Waveform, Pitch (MIDI note or Frequency), Envelope, Duration and modulation
+Each voice has trigger functions for simple ot MIDI note trigger.
+Timing functions are available for sample rate sync and end-of-envelope detection.
+
+
+Dzl/Illutron 2014
+
+dzlsevilgeniuslair.blogspot.dk
+illutron.dk
