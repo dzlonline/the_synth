@@ -54,7 +54,7 @@ const uint16_t PROGMEM PITCHS[]={
 0x5462,0x5966,0x5EB7,0x6459,0x6A50,0x70A3,0x7756,0x7E6E,0x85F3,0x8DEA,0x965A,0x9F4B,0xA8C4,0xB2CD,0xBD6F,0xC8B2,
 };
 */
-PROGMEM char SinTable[]=
+const PROGMEM char SinTable[]=
 {
 	0,	//0
 	3,	//1
@@ -314,7 +314,7 @@ PROGMEM char SinTable[]=
 	-4,	//255
 };
 
-PROGMEM char TriangleTable[]=
+const PROGMEM char TriangleTable[]=
 {
 	0,	//0
 	1,	//1
@@ -574,7 +574,7 @@ PROGMEM char TriangleTable[]=
 	-2,	//255
 };
 
-PROGMEM char  SquareTable[]=
+const PROGMEM char  SquareTable[]=
 {
 	127,	//0
 	127,	//1
@@ -833,7 +833,7 @@ PROGMEM char  SquareTable[]=
 	-125,	//254
 	-1,	//255
 };
-PROGMEM char SawTable[]=
+const PROGMEM char SawTable[]=
 {
 	128,	//0
 	127,	//1
@@ -1092,7 +1092,7 @@ PROGMEM char SawTable[]=
 	-125,	//254
 	-127,	//255
 };
-PROGMEM char RampTable[]=
+const PROGMEM char RampTable[]=
 {
 	-127,	//0
 	-126,	//1
@@ -1351,7 +1351,7 @@ PROGMEM char RampTable[]=
 	126,	//254
 	127,	//255
 };
-PROGMEM char NoiseTable[]=
+const PROGMEM char NoiseTable[]=
 {
 	-62,	//0
 	-72,	//1
@@ -1610,7 +1610,7 @@ PROGMEM char NoiseTable[]=
 	112,	//254
 	119,	//255
 };
-PROGMEM char Env0[]=
+const PROGMEM char Env0[]=
 {
 	255,	//0
 	254,	//1
@@ -1743,7 +1743,7 @@ PROGMEM char Env0[]=
 	0,	//127
 	0,	//127
 };
-PROGMEM char Env1[]=
+const PROGMEM char Env1[]=
 {
 	255,	//0
 	242,	//1
@@ -1877,7 +1877,7 @@ PROGMEM char Env1[]=
 	0,	//127
 	0,	//127
 };
-PROGMEM char Env2[]=
+const PROGMEM char Env2[]=
 {
 	255,	//0
 	254,	//1
@@ -2011,7 +2011,7 @@ PROGMEM char Env2[]=
 	0,	//127
 	0,	//127
 };
-PROGMEM char Env3[]=
+const PROGMEM char Env3[]=
 {
 	255,	//0
 	250,	//1
