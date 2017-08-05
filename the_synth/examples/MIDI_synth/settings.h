@@ -1,6 +1,6 @@
 // Settings for the Arduino Synth library MIDI example
 
-#define SERIAL_BAUDRATE 31250
+#define MIDI_BAUDRATE 31250
 
 #define WAVEFORM_CNTRL 13     // Set the Controller numbers here
 #define ENVELOPE_CNTRL 12
