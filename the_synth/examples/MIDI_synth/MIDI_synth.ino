@@ -36,7 +36,7 @@ midiParser parser;  //-Make a MIDI parser
 void setup() 
 {
   Serial.begin(MIDI_BAUDRATE);    //MIDI BAUD rate
-  edgar.begin();                    //Init synth
+  edgar.begin();                  //Init synth
 }
 
 void loop()
@@ -71,13 +71,13 @@ void loop()
         voice=parser.midi_cmd-0xb0;
         switch(parser.midi_1st)  //-Controller number
         {
-        case WAVEFORM_CNTRL:  //-Controller 13 
+        case WAVEFORM_CNTRL:     //-Controller 13 
           edgar.setWave(voice,parser.midi_2nd/21);
           break;
-        case ENVELOPE_CNTRL:  //-Controller 12
+        case ENVELOPE_CNTRL:     //-Controller 12
           edgar.setEnvelope(voice,parser.midi_2nd/32);
           break;   
-        case LENGTH_CNTRL:  //-Controller 10
+        case LENGTH_CNTRL:       //-Controller 10
           edgar.setLength(voice,parser.midi_2nd);
           break;  
         case MODULATION_CNTRL:   //-Controller 7
