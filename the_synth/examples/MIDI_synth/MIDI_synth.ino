@@ -9,6 +9,7 @@
 // Controller 12 controls envelope: ENVELOPE0[0-32] ENVELOPE1[33-64] ENVELOPE2[65-96] ENVELOPE3[97-127]
 // Controller 10 controls length: [0-127]
 // Controller 7  controls modulation: negative[0-63] neutral[64] positive[65-127]
+// You can change Controller numbers and the Baudrate in settings.h
 //
 
 
@@ -27,15 +28,15 @@
 
 #include <synth.h>
 #include "MIDI_parser.h"
+#include "settings.h"
 
 synth edgar;        //-Make a synth
 midiParser parser;  //-Make a MIDI parser
 
 void setup() 
 {
-  Serial.begin(31250);    //MIDI BAUD rate
-  edgar.begin();          //Init synth
-  pinMode(13,OUTPUT);
+  Serial.begin(MIDI_BAUDRATE);    //MIDI BAUD rate
+  edgar.begin();                    //Init synth
 }
 
 void loop()
@@ -70,16 +71,16 @@ void loop()
         voice=parser.midi_cmd-0xb0;
         switch(parser.midi_1st)  //-Controller number
         {
-        case 13:  //-Controller 13 
+        case WAVEFORM_CNTRL:  //-Controller 13 
           edgar.setWave(voice,parser.midi_2nd/21);
           break;
-        case 12:  //-Controller 12
+        case ENVELOPE_CNTRL:  //-Controller 12
           edgar.setEnvelope(voice,parser.midi_2nd/32);
           break;   
-        case 10:  //-Controller 10
+        case LENGTH_CNTRL:  //-Controller 10
           edgar.setLength(voice,parser.midi_2nd);
           break;  
-        case 7:   //-Controller 7
+        case MODULATION_CNTRL:   //-Controller 7
           edgar.setMod(voice,parser.midi_2nd);
           break;
         }
