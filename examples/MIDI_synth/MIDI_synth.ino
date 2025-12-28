@@ -4,7 +4,7 @@
 //
 // Each of the four voices are assigned to MIDI channel 1,2,3 and 4
 // For each channel:
-// NOTE_ON with velocity over zero triggers voice. 
+// NOTE_ON with velocity > 0 triggers voice, NOTE_ON with velocity 0 or NOTE_OFF releases it.
 // Controller 13 controls waveform: SINE[0-21] TRIANGLE[22-42] SQUARE[43-63] SAW[64-84] RAMP[85-105] NOISE[106-127]
 // Controller 12 controls envelope: ENVELOPE0[0-32] ENVELOPE1[33-64] ENVELOPE2[65-96] ENVELOPE3[97-127]
 // Controller 10 controls length: [0-127]
@@ -50,14 +50,24 @@ void loop()
         //*********************************************
         // Handle MIDI notes
         //*********************************************
-      case 0x90: //-Channel 1 (voice 0)
-      case 0x91: //-Channel 2 (voice 1)
-      case 0x92: //-Channel 3 (voice 2)
-      case 0x93: //-Channel 4 (voice 3)
+      case 0x80: //-NOTE OFF channel 1 (voice 0)
+      case 0x81:
+      case 0x82:
+      case 0x83:
+        voice = parser.midi_cmd-0x80;
+        edgar.release(voice);
+        break;
+
+      case 0x90: //-NOTE ON channel 1 (voice 0)
+      case 0x91:
+      case 0x92:
+      case 0x93:
 
         voice = parser.midi_cmd-0x90;
-        if(parser.midi_2nd)  //-Velocity not zero (could implement NOTE_OFF here)
+        if(parser.midi_2nd)  //-Velocity not zero
           edgar.mTrigger(voice,parser.midi_1st);
+        else
+          edgar.release(voice);
         break;
 
         //*********************************************

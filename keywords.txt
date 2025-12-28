@@ -1,0 +1,9 @@
+synth	KEYWORD1
+setupVoice	KEYWORD2
+mTrigger	KEYWORD2
+synthTick	KEYWORD2
+setWave	KEYWORD2
+setPitch	KEYWORD2
+setEnvelope	KEYWORD2
+setLength	KEYWORD2
+setMod	KEYWORD2

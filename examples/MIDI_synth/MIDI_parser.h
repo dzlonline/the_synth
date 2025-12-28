@@ -1,3 +1,9 @@
+/*
+ * theSynth – 4-voice wavetable engine for AVR Arduinos
+ * Copyright (c) 2014-2025 Dzl / Illutron
+ * Licensed under the MIT License; see the LICENSE file for details.
+ */
+
 // Simple MIDI parser
 // Call update with MIDI stream
 // Returns 1 when a command is redy for execution

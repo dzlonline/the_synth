@@ -1,3 +1,9 @@
+/*
+ * theSynth – 4-voice wavetable engine for AVR Arduinos
+ * Copyright (c) 2014-2025 Dzl / Illutron
+ * Licensed under the MIT License; see the LICENSE file for details.
+ */
+
 //  Tables V2
 
 #ifndef _TABLES

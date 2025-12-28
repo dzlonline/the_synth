@@ -1,88 +1,48 @@
-// Arduino synth library Output mode example.
+// Suspend/resume example demonstrating how to free CPU cycles when audio is not needed.
 
-// The synth can output audio in three modes on two different pins:
+//Hardware connection(s): same low-pass filter shown in README.
 
-// OUTA = Arduino PIN 11
-// OUTB = Arduino PIN 3
+#include <synth.h>
 
-// or
+constexpr uint8_t kVoice = 0;
+constexpr uint32_t kOnWindowMs = 4000;
+constexpr uint32_t kOffWindowMs = 4000;
 
-// Differntial on PINA,PINB
-
-//Hardware connection(s):
-
-//                           +10µF 
-//PIN 11 (OUTA)---[ 1k ]--+---||--->> Audio out
-//                        |
-//                       === 10nF
-//                        |
-//                       GND
-
-//                           +10µF 
-//PIN 3 (OUTB) ---[ 1k ]--+---||--->> Audio out
-//                        |
-//                       === 10nF
-//                        |
-//                       GND
-
-// Differential mode gives twice the voltage swing and may be better for driving piezos or speakers directly.
-// Here are some examples:
-
-// PIN 11 (OUTA) ------- Speaker/Piezo +
-
-// PIN 3 (OUTB)  ------- Speaker/Piezo -
-
-// Or better with a low pass filter
-
-// PIN 11 (OUTA) ----+
-//                   |
-//                    )
-//                    ) 10mH inductor
-//                    )
-//                   |
-//                   +---- Speaker/Piezo +
-//                   |
-//                  === 1µF
-//                   |
-//PIN 3 (OUTB)  -----+---- Speaker/Piezo -
-
-
-
-
-#include "synth.h"
 synth edgar;
+bool audioRunning = true;
+uint32_t lastNote = 0;
 
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
 
-  //Uncomment desired:
-  
-  edgar.begin();        //Default OUTA
-  //edgar.begin(CHA);     //CHA (same as default)
-  //edgar.begin(CHB);     //CHB
-  //edgar.begin(DIFF);    //Differential
-  
-  //  Set up the voices
-  edgar.setupVoice(0,SINE,60,ENVELOPE0,90,64);
-  edgar.setupVoice(1,SINE,62,ENVELOPE1,90,64);
-  edgar.setupVoice(2,SINE,64,ENVELOPE2,90,64);
-  edgar.setupVoice(3,SINE,67,ENVELOPE0,90,64);
-
-
-  edgar.begin();    //-Default OUTA
-  //-Play a little gong
-  edgar.trigger(0);
-  delay(1000);
-  edgar.trigger(1);
-  delay(1000);
-  edgar.trigger(2);
-  delay(1000);
-  edgar.trigger(3);
-  delay(1000);
-
-
+  edgar.begin(DIFF);                         // run in differential mode
+  edgar.setupVoice(kVoice, TRIANGLE, 60, ENVELOPE1, 80, 64);
 }
-void loop() 
-{
+
+void loop() {
+  const uint32_t now = millis();
+
+  // retrigger every second while audio is active
+  if (audioRunning && now - lastNote > 1000) {
+    edgar.mTrigger(kVoice, 60);
+    lastNote = now;
+  }
+
+  // alternate between active/inactive windows without blocking delay()
+  const uint32_t phase = now % (kOnWindowMs + kOffWindowMs);
+  if (phase < kOnWindowMs) {
+    if (!audioRunning) {
+      edgar.resume();
+      audioRunning = true;
+      digitalWrite(LED_BUILTIN, HIGH);
+    }
+  } else {
+    if (audioRunning) {
+      edgar.suspend();
+      audioRunning = false;
+      digitalWrite(LED_BUILTIN, LOW);
+    }
+  }
 }
 
 
